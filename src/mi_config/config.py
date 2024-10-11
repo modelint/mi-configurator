@@ -90,7 +90,6 @@ class Config:
         lib_source_path = self.lib_config_dir / (missing_fname + self.ext)
         self.user_config_dir.mkdir(parents=True, exist_ok=True)
         shutil.copy(lib_source_path, self.user_config_dir)
-        pass
 
     def load_yaml_to_namedtuple(self, fname: str, file_path: Path, nt_type):
         """
@@ -110,8 +109,6 @@ class Config:
             # And try again - should succeed
             with open(file_path, 'r') as file:
                 raw_data = yaml.safe_load(file)
-        pass
-        print()
 
         if not isinstance(raw_data, dict):
             raise BadConfigData(f"Expected dict when loading:\n    {file_path}")
@@ -137,4 +134,3 @@ if __name__ == "__main__":
     c = Config(app_name="mi_tablet", lib_config_dir=p, fnames=("colors",))
     # Load the data from the color.yaml file into a dictionary using the provided named tuple tupe
     cdata = c.load(fnames=("colors",), nt_type=FloatRGB)
-    pass

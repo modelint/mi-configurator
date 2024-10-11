@@ -22,9 +22,6 @@ requires-python = ">=3.13"
 build = ["build", "twine"]
 dev = ["bump2version", "pytest"]
 
-[project.scripts]
-mi_configurator = "mi_configurator.__main__:main"
-
 [project.urls]
 repository    = "https://github.com/modelint/mi_configurator"
 documentation = "https://github.com/modelint/mi_configuratori/wiki"
