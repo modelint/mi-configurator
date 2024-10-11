@@ -1,0 +1,30 @@
+[build-system]
+requires      = ["setuptools>=75.0.0", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "mi-configurator"
+version = "0.0.1"
+description = "Model Integration app configuration management service"
+readme = "README.md"
+authors = [{ name = "Leon Starr", email = "leon_starr@modelint.com" }]
+license = { file = "LICENSE" }
+classifiers = [
+    "License :: OSI Approved :: MIT License",
+    "Programming Language :: Python",
+    "Programming Language :: Python :: 3",
+]
+keywords = ["2D", "draw", "graphics", "canvas", "mbse", "xuml", "xtuml", "sysml"]
+dependencies = ['PyYAML', 'tomli; python_version < "3.13"']
+requires-python = ">=3.13"
+
+[project.optional-dependencies]
+build = ["build", "twine"]
+dev = ["bump2version", "pytest"]
+
+[project.scripts]
+mi_configurator = "mi_configurator.__main__:main"
+
+[project.urls]
+repository    = "https://github.com/modelint/mi_configurator"
+documentation = "https://github.com/modelint/mi_configuratori/wiki"
