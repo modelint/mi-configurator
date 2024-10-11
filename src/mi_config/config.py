@@ -44,6 +44,7 @@ class Config:
         :param fspec: Configuration file names and an optional NamedTuple for loading
         :param ext: The file name extension for fnames
         """
+        self.app_name = app_name
         self.user_config_dir = user_config_home / app_name  # The users's local config library for the app
         self.lib_config_dir = lib_config_dir  # The app's config library
         self.fspec = fspec
@@ -60,12 +61,7 @@ class Config:
         attr_vals = dict()
         for fname, nt_type in self.fspec.items():
             fpath = self.user_config_dir / (fname + self.ext)
-            if nt_type:
-                attr_val = self._load_yaml_to_namedtuple(fpath, nt_type)
-            else:
-                with open(self.user_config_dir / (fname + self.ext), 'r') as file:
-                    attr_val = yaml.safe_load(file)
-            attr_vals[fname] = attr_val
+            attr_vals[fname] = self._load_yaml_to_namedtuple(fpath, nt_type)
         return attr_vals
 
     def init_user_config_dir(self):
@@ -113,7 +109,10 @@ class Config:
         if not isinstance(raw_data, dict):
             raise BadConfigData(f"Expected dict when loading:\n    {file_path}")
         # Load the named tuple
-        nt = {k: nt_type(**v) for k, v in raw_data.items()}
+        if nt_type:
+            nt = {k: nt_type(**v) for k, v in raw_data.items()}
+        else:
+            nt = raw_data
         return nt
 
 
