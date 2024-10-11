@@ -3,7 +3,7 @@
 # System
 import yaml
 from pathlib import Path
-from typing import List, Tuple, NamedTuple
+from typing import List, Tuple, NamedTuple, Dict, Any
 import shutil
 
 # MI Config
@@ -12,6 +12,7 @@ from exceptions import BadConfigData
 # Where all app specific config files should be on linux and mac
 # TODO: For Windows we use the appdirs library
 user_config_home = Path.home() / ".config"
+
 
 class Config:
     """
@@ -30,9 +31,9 @@ class Config:
     user_config_dir = None
     fnames = None
     ext = None
+    loaded_data = None
 
-
-    def __init__(self, app_name: str, lib_config_dir: Path, fnames: Tuple[str], ext: str = "yaml"):
+    def __init__(self, app_name: str, lib_config_dir: Path, fspec: dict[ str, Any ], ext: str = "yaml"):
         """
         Config constructor - See Class comments for relevant attribute descriptions
 
@@ -40,22 +41,24 @@ class Config:
 
         :param app_name: Sets Application name attribute
         :param lib_config_dir: Sets Lib configuration dir attribute
-        :param fnames: Sets the configuration file names
+        :param fspec: Configuration file names and an optional NamedTuple for loading
         :param ext: The file name extension for fnames
         """
         self.user_config_dir = user_config_home / app_name  # The users's local config library for the app
         self.lib_config_dir = lib_config_dir  # The app's config library
-        self.fnames = fnames  # list of file names in the app's config library
+        self.fspec = fspec
         self.ext = "." + ext  # Extension used on all of the config files
 
-    def load(self, fnames: Tuple[str], nt_type):
+        self.loaded_data = self.load()
+
+    def load(self):
         """
         Processes the config_type dictionary, loading each yaml configuration file into either
         a named tuple or a simple key value dictionary if no named tuple is provided
         and then sets the corresponding StyleDB class attribute to that value
         """
         attr_vals = dict()
-        for fname in fnames:
+        for fname, nt_type in self.fspec.items():
             fpath = self.user_config_dir / (fname + self.ext)
             if nt_type:
                 attr_val = self.load_yaml_to_namedtuple(fname, fpath, nt_type)
@@ -114,19 +117,25 @@ class Config:
 
 
 if __name__ == "__main__":
-
     # See if we can load the TabletQT color.yaml file
     # Example Named tuple to test loading of color records
 
-    class FloatRGB(NamedTuple):
+    class ColorCanvas(NamedTuple):
         r: int
         g: int
         b: int
         canvas: bool
 
+    class LineStyle(NamedTuple):
+        pattern: str
+        width: int
+        color: str
+        
+    fspec = { 'colors': ColorCanvas, 'line_styles': LineStyle }
+
+
     # Path to the TabletQT project configuration files
     p = Path("/Users/starr/SDEV/Python/PyCharm/TabletQT/src/tabletqt/configuration")
     # Create a Config instances for the tablet app to load just the color.yaml file
-    c = Config(app_name="mi_tablet", lib_config_dir=p, fnames=("colors",))
-    # Load the data from the color.yaml file into a dictionary using the provided named tuple tupe
-    cdata = c.load(fnames=("colors",), nt_type=FloatRGB)
+    c = Config(app_name="mi_tablet", lib_config_dir=p, fspec=fspec)
+    print("No problemo!")
