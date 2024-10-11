@@ -5,7 +5,6 @@ import yaml
 from pathlib import Path
 from typing import List, Tuple, NamedTuple
 import shutil
-import logging
 
 # MI Config
 from exceptions import BadConfigData
@@ -32,7 +31,6 @@ class Config:
     fnames = None
     ext = None
 
-    _logger = logging.getLogger(__name__)
 
     def __init__(self, app_name: str, lib_config_dir: Path, fnames: Tuple[str], ext: str = "yaml"):
         """
@@ -57,10 +55,8 @@ class Config:
         and then sets the corresponding StyleDB class attribute to that value
         """
         attr_vals = dict()
-        self._logger.info(f"Loading configuration\n---")
         for fname in fnames:
             fpath = self.user_config_dir / (fname + self.ext)
-            self._logger.info(f"loading: {fpath}")
             if nt_type:
                 attr_val = self.load_yaml_to_namedtuple(fname, fpath, nt_type)
             else:
