@@ -16,7 +16,7 @@ classifiers = [
 ]
 keywords = ["2D", "draw", "graphics", "canvas", "mbse", "xuml", "xtuml", "sysml"]
 dependencies = ['PyYAML', 'tomli; python_version < "3.13"']
-requires-python = ">=3.13"
+requires-python = ">=3.12"
 
 [project.optional-dependencies]
 build = ["build", "twine"]
