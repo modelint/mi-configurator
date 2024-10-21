@@ -7,7 +7,7 @@ from typing import List, Tuple, NamedTuple, Dict, Any
 import shutil
 
 # MI Config
-from exceptions import BadConfigData
+from src.exceptions import BadConfigData
 
 # Where all app specific config files should be on linux and mac
 # TODO: For Windows we use the appdirs library
