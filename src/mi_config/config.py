@@ -107,7 +107,7 @@ class Config:
                 raw_data = yaml.safe_load(file)
 
         if not isinstance(raw_data, dict):
-            raise BadConfigData(f"Expected dict when loading:\n    {file_path}")
+            return raw_data
         # Load the named tuple
         if nt_type:
             nt = {k: nt_type(**v) for k, v in raw_data.items()}
