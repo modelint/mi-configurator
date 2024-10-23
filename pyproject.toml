@@ -4,7 +4,7 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "mi-configurator"
-version = "0.0.8"
+version = "0.0.9"
 description = "Model Integration app configuration management service"
 readme = "README.md"
 authors = [{ name = "Leon Starr", email = "leon_starr@modelint.com" }]
