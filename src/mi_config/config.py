@@ -124,7 +124,6 @@ if __name__ == "__main__":
         r: int
         g: int
         b: int
-        canvas: bool
 
     class LineStyle(NamedTuple):
         pattern: str
