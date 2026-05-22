@@ -1,13 +1,10 @@
-""" config.py """
+""" config.py -- The Config class which is the main entry point for this package"""
 
 # System
 import yaml
 from pathlib import Path
 from typing import List, Tuple, NamedTuple, Dict, Any
 import shutil
-
-# MI Config
-from mi_config.exceptions import BadConfigData
 
 # Where all app specific config files should be on linux and mac
 # TODO: For Windows we use the appdirs library
@@ -39,10 +36,12 @@ class Config:
 
         Saves the app name, user and library config paths, and config file names
 
-        :param app_name: Sets Application name attribute
-        :param lib_config_dir: Sets Lib configuration dir attribute
-        :param fspec: Configuration file names and an optional NamedTuple for loading
-        :param ext: The file name extension for fnames
+        Parameters:
+
+            app_name: Sets Application name attribute
+            lib_config_dir: Sets Lib configuration dir attribute
+            fspec: Configuration file names and an optional NamedTuple for loading
+            param ext: The file name extension for fnames
         """
         self.app_name = app_name
         self.user_config_dir = user_config_home / app_name  # The users's local config library for the app
@@ -92,8 +91,9 @@ class Config:
         Load the yaml file in the specfied path and format the data into the
         supplied named tuple type
 
-        :param file_path: Path to the configuration file
-        :param nt_type: Named tuple type
+        Parameters:
+            file_path: Path to the configuration file
+            nt_type: Named tuple type
         """
         try:
             # Try to load requested file from the users's config dir
